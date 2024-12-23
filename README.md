@@ -1,24 +1,19 @@
-# README
+# Test task
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+API-only Rails application to create companies with associated address. Allow to add companies both via single API request and via bulk CSV importing. [Full requirements](docs/Backend_Developer_Hometask.pdf). 
 
-Things you may want to cover:
+## Testing and linters
 
-* Ruby version
+```bash
+# Creating DB
+bundle ex rails db:setup
 
-* System dependencies
+# Run Rubocop Linters
+bundle ex rails rubocop
 
-* Configuration
+# Run RSpec tests
+bundle ex rails rspec
 
-* Database creation
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Thoughts, conclusions, and implementation ideas 
