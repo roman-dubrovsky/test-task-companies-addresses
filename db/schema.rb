@@ -27,7 +27,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_23_122148) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
-    t.integer "registration_number"
+    t.bigint "registration_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["registration_number"], name: "index_companies_on_registration_number", unique: true

@@ -2,3 +2,10 @@ inherit_gem:
   datarockets-style:
     - config/rails.yml
     - config/rspec.yml
+
+Rails/DeprecatedActiveModelErrorsMethods:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/requests/**/*
