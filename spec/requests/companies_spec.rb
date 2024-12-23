@@ -9,6 +9,8 @@ RSpec.describe "Companies API", type: :request do
     let(:company) { build(:company) }
     let(:address) { build(:address) }
 
+    let(:created_company) { Company.last }
+
     let(:params) { single_request_params(company, [address]) }
 
     context "when valid example with single address" do
@@ -17,9 +19,15 @@ RSpec.describe "Companies API", type: :request do
 
         expect(response).to have_http_status(:created)
       end
-    end
 
-    context "when valid example with multiple addresses"
+      it "creates new company with address" do
+        expect { do_request }.to change { Company.count }.by(1)
+
+        expect(created_company.addresses.count).to be 1
+        expect(created_company.name).to eq company.name
+        expect(created_company.addresses.first.street).to eq address.street
+      end
+    end
 
     context "when validation error" do
       before do
@@ -31,6 +39,10 @@ RSpec.describe "Companies API", type: :request do
 
         expect(response).to have_http_status(:bad_request)
         expect(json_response).to eq({"registration_number" => ["must be unique"]})
+      end
+
+      it "does not create new companies" do
+        expect { do_request }.not_to change { Company.count }
       end
     end
   end

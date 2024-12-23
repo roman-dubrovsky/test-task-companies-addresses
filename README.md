@@ -17,3 +17,7 @@ bundle ex rails rspec
 ```
 
 ## Thoughts, conclusions, and implementation ideas 
+
+### Batch Inserting 
+
+During implementation, I thoughts if we need to care about N + 1 queries on creating new objects. So I implemented both variants and comment implementation with batch inserting.

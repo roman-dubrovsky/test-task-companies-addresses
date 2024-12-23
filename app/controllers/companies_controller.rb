@@ -2,12 +2,12 @@
 
 class CompaniesController < ApplicationController
   def create
-    company = CompanyContract.new.call(company_params.to_h)
+    result = Companies::Create.new.call(company_params)
 
-    if company.success?
+    if result.success?
       head :created
     else
-      render status: :bad_request, json: company.errors.to_h
+      render status: :bad_request, json: result.failure
     end
   end
 

@@ -3,6 +3,7 @@
 source "https://rubygems.org"
 
 gem "bootsnap", require: false
+gem "dry-operation"
 gem "dry-validation"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
