@@ -30,5 +30,14 @@ group :development, :test do
   gem "brakeman", require: false
   gem "datarockets-style", "~> 1.6.0"
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "factory_bot_rails"
+  gem "faker"
   gem "pry-byebug"
+  gem "rspec-rails", "~> 7.0.0"
+  gem "shoulda-matchers", "~> 6.0"
+end
+
+group :test do
+  gem "database_cleaner-active_record"
+  gem "rspec-its"
 end
