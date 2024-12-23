@@ -13,11 +13,29 @@ RSpec.describe "Companies API", type: :request do
 
     let(:params) { single_request_params(company, [address]) }
 
+    let(:expected_response) do
+      {
+        "id" => created_company.id,
+        "name" => company.name,
+        "registration_number" => company.registration_number,
+        "addresses" => [
+          {
+            "id" => created_company.addresses.first.id,
+            "street" => address.street,
+            "city" => address.city,
+            "postal_code" => address.postal_code,
+            "country" => address.country,
+          },
+        ],
+      }
+    end
+
     context "when valid example with single address" do
-      it "returns created status code" do
+      it "returns created status code with response" do
         do_request
 
         expect(response).to have_http_status(:created)
+        expect(json_response).to eq(expected_response)
       end
 
       it "creates new company with address" do

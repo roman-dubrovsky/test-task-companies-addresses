@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
     result = Companies::Create.new.call(company_params)
 
     if result.success?
-      head :created
+      render status: :created, json: result.success
     else
       render status: :bad_request, json: result.failure
     end
