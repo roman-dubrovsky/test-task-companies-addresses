@@ -9,6 +9,7 @@ gem "dry-validation"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.1"
+gem "smarter_csv"
 gem "thruster", require: false
 gem "tzinfo-data", platforms: %i[windows jruby]
 
