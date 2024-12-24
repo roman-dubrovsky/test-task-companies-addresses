@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class CompanyContract < ApplicationContract
+  attr_reader :registration_number_validator
+
+  def initialize(registration_number_validator: nil)
+    super()
+    @registration_number_validator = registration_number_validator || Companies::CheckRegistrationNumberUniqueness.new
+  end
+
   params do
     required(:name).filled(:string)
     required(:registration_number).value(:integer)
@@ -18,6 +25,6 @@ class CompanyContract < ApplicationContract
   end
 
   rule(:registration_number) do
-    key.failure("must be unique") unless Companies::CheckRegistrationNumberUniqueness.new(value).call
+    key.failure("must be unique") unless registration_number_validator.call(value)
   end
 end

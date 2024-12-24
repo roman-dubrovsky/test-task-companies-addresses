@@ -2,13 +2,21 @@
 
 module Companies
   class CheckRegistrationNumberUniqueness
-    attr_reader :value
+    attr_reader :memo
 
-    def initialize(value)
-      @value = value
+    def initialize
+      @memo = {}
     end
 
-    def call
+    def call(value)
+      return memo[value] if memo.include? value
+
+      memo[value] = validate(value)
+    end
+
+    private
+
+    def validate(value)
       Company.where(registration_number: value).none?
     end
   end

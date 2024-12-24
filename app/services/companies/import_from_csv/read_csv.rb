@@ -39,7 +39,7 @@ module Companies
       end
 
       def validate_line(data, line_index)
-        line_contract = CompanyContract.new.call(
+        line_contract = CompanyContract.new(registration_number_validator:).call(
           company_info(data).merge("addresses" => [address_info(data)]),
         )
         errors[line_index] = format_error(line_contract) unless line_contract.success?
@@ -62,6 +62,10 @@ module Companies
         end
 
         errors
+      end
+
+      def registration_number_validator
+        @_registration_number_validator ||= Companies::CheckRegistrationNumberUniqueness.new
       end
 
       def company_info(data)
