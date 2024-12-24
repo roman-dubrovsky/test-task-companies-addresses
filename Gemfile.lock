@@ -121,17 +121,12 @@ GEM
       concurrent-ruby (~> 1.0)
       logger
       zeitwerk (~> 2.6)
-    dry-events (1.0.1)
-      concurrent-ruby (~> 1.0)
-      dry-core (~> 1.0, < 2)
     dry-inflector (1.1.0)
     dry-initializer (3.1.1)
     dry-logic (1.5.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
-    dry-matcher (1.0.0)
-      dry-core (~> 1.0, < 2)
     dry-monads (1.6.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
@@ -147,11 +142,6 @@ GEM
       dry-logic (>= 1.4, < 2)
       dry-types (>= 1.7, < 2)
       zeitwerk (~> 2.6)
-    dry-transaction (0.16.0)
-      dry-core (~> 1.0)
-      dry-events (~> 1.0)
-      dry-matcher (~> 1.0)
-      dry-monads (~> 1.6)
     dry-types (1.7.2)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
@@ -408,7 +398,6 @@ DEPENDENCIES
   datarockets-style (~> 1.6.0)
   debug
   dry-operation
-  dry-transaction
   dry-validation
   factory_bot_rails
   faker
