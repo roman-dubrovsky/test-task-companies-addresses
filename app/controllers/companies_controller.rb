@@ -12,7 +12,12 @@ class CompaniesController < ApplicationController
   end
 
   def import
-    head :not_found
+    result = Companies::ImportFromCsv.new.call(params[:file])
+    if result.success?
+      render status: :created, json: result.success
+    else
+      render status: :bad_request, json: result.failure
+    end
   end
 
   private

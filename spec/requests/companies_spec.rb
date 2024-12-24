@@ -66,10 +66,20 @@ RSpec.describe "Companies API", type: :request do
   end
 
   describe "POST /companies/import" do
-    subject(:do_request) { post "/companies/import", params: {file: csv_file} }
+    subject(:do_request) do
+      post "/companies/import", params: {
+        file: Rack::Test::UploadedFile.new(tempfile.path, "text/csv"),
+      }
+    end
 
-    let(:csv_file) { StringIO.new(csv) }
     let(:json_response) { response.parsed_body }
+
+    let(:tempfile) do
+      file = Tempfile.new(["test", ".csv"])
+      file.write(csv)
+      file.rewind
+      file
+    end
 
     let(:csv) { generate_csv_data(csv_data) }
     let(:csv_data) { companies_and_addresses_csv_data(companies) }
@@ -78,6 +88,11 @@ RSpec.describe "Companies API", type: :request do
     let(:large_company) { build(:company_with_addresses, addresses_count: 5) }
     let(:small_company) { build(:company_with_addresses) }
     let(:single_address_company) { build(:company_with_addresses, addresses_count: 1) }
+
+    after do
+      tempfile.close
+      tempfile.unlink
+    end
 
     context "when valid example" do
       let(:small_company_response) do
@@ -88,10 +103,15 @@ RSpec.describe "Companies API", type: :request do
 
       let(:expected_response) do
         {
-          id: created_small_company.id,
-          name: small_company.name,
-          registration_number: small_company.registration_number,
-          addresses: [],
+          "id" => created_small_company.id,
+          "name" => small_company.name,
+          "registration_number" => small_company.registration_number,
+          "addresses" => small_company.addresses.map do |address|
+            attributes = address.attributes.slice("street", "country", "postal_code", "city")
+            attributes.merge({
+              "id" => created_small_company.addresses.find_by(attributes).id,
+            })
+          end,
         }
       end
 
@@ -123,6 +143,13 @@ RSpec.describe "Companies API", type: :request do
           .map(&:last).max
       end
 
+      let(:expected_response) do
+        {
+          (single_address_line + 1).to_s => {"city" => ["must be filled"]},
+          (wrong_company_line + 1).to_s => {"registration_number" => ["already present in the file"]},
+        }
+      end
+
       before do
         single_address_company.addresses.first.city = ""
         csv_data[wrong_company_line][0] = "Invalid Company Name"
@@ -132,6 +159,7 @@ RSpec.describe "Companies API", type: :request do
         do_request
 
         expect(response).to have_http_status(:bad_request)
+        expect(json_response).to eq(expected_response)
       end
 
       it "does not create new companies" do

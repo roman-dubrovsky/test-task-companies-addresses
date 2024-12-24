@@ -58,6 +58,8 @@ GEM
       activemodel (= 8.0.1)
       activesupport (= 8.0.1)
       timeout (>= 0.4.0)
+    activerecord-import (2.0.0)
+      activerecord (>= 4.2)
     activestorage (8.0.1)
       actionpack (= 8.0.1)
       activejob (= 8.0.1)
@@ -119,12 +121,17 @@ GEM
       concurrent-ruby (~> 1.0)
       logger
       zeitwerk (~> 2.6)
+    dry-events (1.0.1)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.0, < 2)
     dry-inflector (1.1.0)
     dry-initializer (3.1.1)
     dry-logic (1.5.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
+    dry-matcher (1.0.0)
+      dry-core (~> 1.0, < 2)
     dry-monads (1.6.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
@@ -140,6 +147,11 @@ GEM
       dry-logic (>= 1.4, < 2)
       dry-types (>= 1.7, < 2)
       zeitwerk (~> 2.6)
+    dry-transaction (0.16.0)
+      dry-core (~> 1.0)
+      dry-events (~> 1.0)
+      dry-matcher (~> 1.0)
+      dry-monads (~> 1.6)
     dry-types (1.7.2)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
@@ -339,7 +351,6 @@ GEM
     securerandom (0.4.1)
     shoulda-matchers (6.4.0)
       activesupport (>= 5.2.0)
-    smarter_csv (1.13.1)
     solid_cable (3.0.5)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -390,12 +401,14 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  activerecord-import
   bootsnap
   brakeman
   database_cleaner-active_record
   datarockets-style (~> 1.6.0)
   debug
   dry-operation
+  dry-transaction
   dry-validation
   factory_bot_rails
   faker
@@ -407,7 +420,6 @@ DEPENDENCIES
   rspec-its
   rspec-rails (~> 7.0.0)
   shoulda-matchers (~> 6.0)
-  smarter_csv
   solid_cable
   solid_cache
   solid_queue
